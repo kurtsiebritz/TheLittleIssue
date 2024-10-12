@@ -1,7 +1,7 @@
-/* General Styling */
+
 body {
-    background-color: #FDEDE5; /* Light peach background */
-    font-family: 'Comic Sans MS', sans-serif; /* Playful font for kids */
+    background-color: #FDEDE5;
+    font-family: 'Comic Sans MS', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -14,7 +14,7 @@ header {
     header h1 {
         font-size: 42px;
         color: #333;
-        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2); /* 3D shadow effect */
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2); 
     }
 
 .header-icons span {
@@ -22,16 +22,15 @@ header {
     font-size: 16px;
     border-radius: 50%;
     padding: 5px 10px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
-    background-color: #FFF9C4; /* Light yellow for icons */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    background-color: #FFF9C4;
 }
 
-/* Card Styling */
 .card {
-    background-color: #FFEB99; /* Pastel yellow base */
-    border-radius: 25px; /* Softer, rounder corners */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 -5px 10px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.1); /* Added inset shadow for soft edges */
-    transition: all 0.4s ease; /* Smooth transition for hover effect */
+    background-color: #FFEB99;
+    border-radius: 25px; 
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 -5px 10px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
     padding: 20px;
     margin-bottom: 20px;
     position: relative;
@@ -42,24 +41,23 @@ header {
 }
 
 .card:hover {
-    transform: translateY(-10px); /* Lift effect */
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35), 0 -5px 15px rgba(255, 255, 255, 0.3); /* Stronger hover shadow */
+    transform: translateY(-10px); 
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35), 0 -5px 15px rgba(255, 255, 255, 0.3);
 }
 
-/* Adding white shadow to card-title text */
 .card-title {
     font-size: 24px;
     color: #444;
-    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8); /* White shadow effect */
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8); 
 }
 
 .card-text {
     font-size: 18px;
     color: #666;
-    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6); /* Subtle white shadow for card text */
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6);
 }
 
-/* Enhanced shadow on the card itself */
+
 .card::before {
     content: '';
     position: absolute;
@@ -67,31 +65,31 @@ header {
     left: 10%;
     right: 10%;
     height: 20px;
-    background: rgba(0, 0, 0, 0.15); /* Simulates shadow under the card */
+    background: rgba(0, 0, 0, 0.15); 
     filter: blur(8px);
-    z-index: -1; /* Ensures it stays behind the card */
+    z-index: -1; 
 }
 
-/* Button Styling */
+
 .btn {
     border-radius: 20px;
     padding: 15px 30px;
     font-size: 20px;
-    background-color: #FFB6C1; /* Soft pink */
+    background-color: #FFB6C1;
     color: #fff;
     border: none;
     text-transform: uppercase;
-    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5); /* 3D effect */
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
 }
 
     .btn:hover {
-        background-color: #FF69B4; /* Brighter hover color */
+        background-color: #FF69B4;
         transform: translateY(-5px);
-        box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.6); /* Lifted shadow on hover */
+        box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.6);
     }
 
-/* Footer */
+
 footer {
     margin-top: 50px;
     padding: 20px;
@@ -102,26 +100,26 @@ footer {
     box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Article Button */
+
 .btn-success {
-    background-color: #ADD8E6; /* Soft blue */
+    background-color: #ADD8E6;
     border: none;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15), -2px -2px 8px rgba(255, 255, 255, 0.4); /* 3D effect */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15), -2px -2px 8px rgba(255, 255, 255, 0.4);
     border-radius: 25px;
 }
 
     .btn-success:hover {
-        background-color: #87CEFA; /* Bright hover color */
+        background-color: #87CEFA;
     }
 
-/* Resource Section */
+
 .card p {
     font-size: 16px;
     color: #777;
-    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6); /* White shadow effect */
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6);
 }
 
 .card img {
     border-radius: 50%;
-    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.2), -3px -3px 8px rgba(255, 255, 255, 0.4); /* 3D effect for images */
+    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.2), -3px -3px 8px rgba(255, 255, 255, 0.4);
 }

@@ -22,6 +22,10 @@ namespace TheLittleIssue.Controllers
             return View();
         }
 
+        public IActionResult Resources()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
