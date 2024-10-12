@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="container">
+    <h1 class="text-center mt-5">Parent/Teacher Resources</h1>
+
+    <div class="resource-section d-flex justify-content-between flex-wrap mt-5">
+        <!-- Resource Card 1 -->
+        <div class="resource-card text-center">
+            <img src="https://via.placeholder.com/150" alt="Lesson Plans" class="img-fluid">
+            <h3>Lesson Plans</h3>
+            <p>Download lesson plans for teachers and parents.</p>
+            <a href="#" class="btn btn-primary">View Resources</a>
+        </div>
+
+        <!-- Resource Card 2 -->
+        <div class="resource-card text-center">
+            <img src="https://via.placeholder.com/150" alt="Tips for Reading Support" class="img-fluid">
+            <h3>Tips for Reading Support</h3>
+            <p>Get tips on how to support reading development.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+        </div>
+
+        <!-- Resource Card 3 -->
+        <div class="resource-card text-center">
+            <img src="https://via.placeholder.com/150" alt="Activity Sheets" class="img-fluid">
+            <h3>Activity Sheets</h3>
+            <p>Fun activity sheets to support learning.</p>
+            <a href="#" class="btn btn-primary">Download Sheets</a>
+        </div>
+    </div>
+</div>
+
+<!-- Add the CSS styling -->
+<style>
+    .resource-section {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .resource-card {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 20px;
+        width: 30%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-card img {
+            max-width: 100%;
+            margin-bottom: 15px;
+        }
+
+    h1 {
+        font-weight: bold;
+        color: #333;
+    }
+</style>
