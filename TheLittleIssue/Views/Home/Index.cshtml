@@ -2,57 +2,168 @@
     ViewBag.Title = "The Little Issue";
 }
 
-<div class="row">
-    <!-- Card 1: Educational Activities -->
-    <div class="col-md-4">
-        <div class="card p-3 text-center" style="background-color: #FFA07A; border-radius: 20px;">
-            <div class="card-body">
-                <h5 class="card-title">Educational Activities</h5>
-                <p class="card-text">Explore various activities to enhance your learning.</p>
-                <a href="#" class="btn btn-primary">Articles & Activities</a>
+<main>
+    <!-- Image Carousel Section -->
+    <section id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../images/home-image.png" class="d-block w-100 carousel-image" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="../images/home-image4.jpg" class="d-block w-100 carousel-image" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="../images/home-image3.jpg" class="d-block w-100 carousel-image" alt="Slide 3">
+            </div>
+            <div class="carousel-item">
+                <img src="../images/home-image2.png" class="d-block w-100 carousel-image" alt="Slide 4">
+            </div>
+            <div class="carousel-item">
+                <img src="../images/home-image5.png" class="d-block w-100 carousel-image" alt="Slide 5">
             </div>
         </div>
-    </div>
 
-    <!-- Card 2: Interactive Activities -->
-    <div class="col-md-4">
-        <div class="card p-3 text-center" style="background-color: #90EE90; border-radius: 20px;">
-            <div class="card-body">
-                <h5 class="card-title">Interactive Activities</h5>
-                <p class="card-text">Interactive content to engage and learn.</p>
-                <a href="#" class="btn btn-primary">Articles & Activities</a>
-            </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </section>
+
+    <!-- Updated Cards Section -->
+    <section class="cards">
+        <div class="card card1">
+            <h2>FATILLES EDUCATIONAL</h2>
+            <p>Explore articles and engaging activities for enhanced learning.</p>
         </div>
-    </div>
-
-    <!-- Card 3: Interactive Resources -->
-    <div class="col-md-4">
-        <div class="card p-3 text-center" style="background-color: #ADD8E6; border-radius: 20px;">
-            <div class="card-body">
-                <h5 class="card-title">Interactive Resources</h5>
-                <p class="card-text">Find resources to further your knowledge.</p>
-                <a href="#" class="btn btn-primary">Interactive Resources</a>
-            </div>
+        <div class="card card2">
+            <h2>INTERACTIVE ACTIVITIES</h2>
+            <p>Discover fun and interactive activities that foster creativity.</p>
         </div>
-    </div>
-</div>
-
-<!-- Articles Section -->
-<div class="row mt-4">
-    <div class="col-12 text-center">
-        <button class="btn btn-success" style="border-radius: 20px; padding: 10px 40px;">Articles</button>
-    </div>
-</div>
-
-<!-- Resource Section -->
-<div class="row mt-4">
-    <div class="col-12 text-center">
-        <div class="card p-3" style="background-color: #FFFFE0; border-radius: 20px;">
-            <div class="card-body">
-                <h5 class="card-title">Resources</h5>
-                <p class="card-text">Browse educational materials to expand your knowledge.</p>
-                <a href="#" class="btn btn-primary">Resources</a>
-            </div>
+        <div class="card card3">
+            <h2>INTERACTIVE RESOURCES</h2>
+            <p>Access a wealth of resources designed for dynamic learning.</p>
         </div>
-    </div>
-</div>
+        <div class="card card4">
+            <h2>CREATIVE WORKSHOPS</h2>
+            <p>Join our workshops to explore your creative potential.</p>
+        </div>
+    </section>
+
+    <section class="more-info">
+        <h2>Articles</h2>
+        <div class="info-card">Resources</div>
+    </section>
+</main>
+
+<!-- Bootstrap JS -->
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+
+    /* Body Background Image */
+    body {
+        background-image: url('../images/background1.jpg'); /* Update with your background image path */
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Prevent repeating */
+        height: 100vh; /* Full viewport height */
+        margin: 0; /* Remove default body margin */
+    }
+
+    /* Carousel Styles */
+    #imageCarousel {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .carousel-inner {
+        height: 400px;
+    }
+
+    .carousel-image {
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* Updated Cards Styles */
+    .cards {
+        display: flex;
+        justify-content: space-around;
+        margin-top: -50px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        padding: 30px; /* Increased padding */
+        border-radius: 15px; /* More rounded corners */
+        text-align: center;
+        width: 250px; /* Increased width for bigger cards */
+        height: 250px; /* Fixed height for uniformity */
+        position: relative; /* For shadow effect */
+        overflow: hidden; /* Hide overflow for shadow */
+        transition: transform 0.2s; /* Smooth hover effect */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    }
+
+        .card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+
+    /* Clay-like Appearance */
+    .card1 {
+        background: linear-gradient(to bottom, #ffcccb, #f8b4b4);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+    }
+
+    .card2 {
+        background: linear-gradient(to bottom, #add8e6, #87ceeb);
+        box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
+    }
+
+    .card3 {
+        background: linear-gradient(to bottom, #90ee90, #77dd77);
+        box-shadow: 0 15px 30px rgba(144, 238, 144, 0.3);
+    }
+
+    .card4 {
+        background: linear-gradient(to bottom, #ffeb8c, #ffcc00);
+        box-shadow: 0 15px 30px rgba(255, 255, 0, 0.3);
+    }
+
+    /* Lighting Effect */
+    .card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        pointer-events: none; /* Allow clicks through */
+        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5);
+        z-index: -1; /* Behind the card */
+    }
+
+    .more-info {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .info-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+    }
+</style>

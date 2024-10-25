@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
 }
 
@@ -11,6 +12,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Articles</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('../images/background2.jpg'); /* Path to your background image */
+            background-size: cover; /* Cover the entire area */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: rgba(135, 206, 235, 0.9); /* Sky blue with slight transparency */
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1; /* Ensure header is above background */
+            border-radius: 15px; /* Rounded corners */
+            color: white; /* Set text color to white */
+        }
+
+        /* Articles Container */
+        .articles-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            z-index: 1; /* Ensure cards are above background */
+            color: white; /* Set text color to white for all child elements */
+        }
+
+
+        /* Card Styling */
+        .card {
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Base color */
+            border-radius: 15px;
+            margin: 15px;
+            padding: 20px;
+            width: 250px;
+            height: 200px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4); /* Aggressive shadow for depth */
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+            /* Card Hover Effects */
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+            }
+
+            /* Card Titles */
+            .card h2 {
+                color: #ffffff; /* Change this color to customize title color */
+                font-size: 1.5em;
+                margin: 0 0 10px;
+            }
+
+            /* Card Paragraphs */
+            .card p {
+                color: #ffffff; /* Text color for better readability */
+                font-size: 0.9em;
+            }
+
+            /* Specific Colors for Each Card */
+            .card:nth-child(1) {
+                background-color: #FF9999; /* Lighter Red */
+                background: radial-gradient(circle, #FF9999 30%, #FF7373 70%);
+            }
+
+            .card:nth-child(2) {
+                background-color: #FFE58B; /* Lighter Yellow */
+                background: radial-gradient(circle, #FFE58B 30%, #FFD54F 70%);
+            }
+
+            .card:nth-child(3) {
+                background-color: #A8E6CE; /* Lighter Green */
+                background: radial-gradient(circle, #A8E6CE 30%, #7DDFB9 70%);
+            }
+
+            .card:nth-child(4) {
+                background-color: #8CCBEB; /* Lighter Blue */
+                background: radial-gradient(circle, #8CCBEB 30%, #67A2B8 70%);
+            }
+
+            .card:nth-child(5) {
+                background-color: #FFB3B3; /* Lighter Dark Red */
+                background: radial-gradient(circle, #FFB3B3 30%, #FF8C8C 70%);
+            }
+
+            .card:nth-child(6) {
+                background-color: #FFB2C1; /* Lighter Pink */
+                background: radial-gradient(circle, #FFB2C1 30%, #FF8DAA 70%);
+            }
+    </style>
 </head>
 <body>
     <header>
