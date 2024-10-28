@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Register";
+    ViewData["HideNavBar"] = true; // Hide the NavBar on this page
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Sans+MS|Nunito:400,600,700">
+
+    <style>
+        /* Base styling for the registration page */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full height of the viewport */
+            margin: 0;
+            padding: 0; /* Ensure no padding is affecting height */
+            background-image: url(/images/background1.jpg);
+            background-size: cover; /* Cover the entire screen */
+        }
+
+        /* Main container for the registration box */
+        .register-container {
+            background-color: rgba(255, 204, 0, 0.8); /* Bright yellow with some transparency */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            margin: auto; /* Centering */
+        }
+
+        .register-title {
+            font-size: 2.5em;
+            color: #ff0066; /* Playful pink */
+            margin-bottom: 1rem;
+        }
+
+        .register-description {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        /* Form styling */
+        .register-input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: 2px solid #ff0066; /* Pink border */
+            font-size: 1em;
+        }
+
+            .register-input:focus {
+                outline: none;
+                border-color: #33ccff; /* Light blue focus */
+            }
+
+        /* Button styling */
+        .register-button {
+            background-color: #33ccff; /* Light blue button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+            .register-button:hover {
+                background-color: #0080ff; /* Darker blue on hover */
+            }
+
+        .register-footer {
+            margin-top: 20px; /* Added margin for spacing */
+            font-size: 0.9rem;
+        }
+
+            .register-footer a {
+                color: #ff0066; /* Pink for link */
+                text-decoration: none;
+            }
+
+                .register-footer a:hover {
+                    text-decoration: underline;
+                }
+
+        /* Error messages */
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <h1 class="register-title">Create an Account</h1>
+        <p class="register-description">Please fill in the details to register.</p>
+
+        <form action="/User/Register" method="post" onsubmit="return validateForm()">
+            <input type="text" name="firstName" class="register-input" placeholder="First Name" required>
+            <input type="text" name="secondName" class="register-input" placeholder="Surname" required>
+            <input type="email" name="email" id="email" class="register-input" placeholder="Email" required>
+            <span id="emailError" class="error-message">@ViewData["EmailError"]</span>
+            <input type="date" name="dateOfBirth" class="register-input" required>
+            <input type="password" name="password" id="password" class="register-input" placeholder="Password" required>
+            <span id="passwordError" class="error-message"></span>
+            <input type="password" name="confirmPassword" id="confirmPassword" class="register-input" placeholder="Confirm Password" required>
+            <span id="confirmPasswordError" class="error-message"></span>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+
+        <div class="register-footer">
+            <p>Already have an account? <a href="/User/Login">Login now</a></p>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let confirmPasswordError = document.getElementById("confirmPasswordError");
+
+            let valid = true;
+
+            // Password validation
+            if (password.length < 6 || !/\d/.test(password)) {
+                passwordError.innerText = "Password must be at least 6 characters and contain at least one digit.";
+                valid = false;
+            } else {
+                passwordError.innerText = "";
+            }
+
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                confirmPasswordError.innerText = "Passwords do not match.";
+                valid = false;
+            } else {
+                confirmPasswordError.innerText = "";
+            }
+
+            return valid;
+        }
+    </script>
+</body>
+</html>

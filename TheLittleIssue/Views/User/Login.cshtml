@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Login";
+    ViewData["HideNavBar"] = true;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - The Small Issue</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-image: url(/images/background1.jpg);
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 204, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: red;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid red;
+            font-size: 1em;
+        }
+
+            input:focus {
+                outline: none;
+                border-color: #33ccff;
+            }
+
+        .login-button {
+            background-color: #33ccff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .login-button:hover {
+                background-color: #0080ff;
+            }
+
+        .footer-text {
+            margin-top: 20px;
+        }
+
+        .link {
+            color: red;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .guest-button {
+            background-color: #ffcc00; /* Yellow color for guest button */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .guest-button:hover {
+                background-color: #e6b800; /* Darker yellow on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Welcome Back!</h1>
+        <p class="subtitle">Please log in to continue</p>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="error-message">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
+        <form action="/User/Login" method="post">
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+        <button class="guest-button" onclick="window.location.href='/User/ContinueAsGuest'">Continue as Guest</button>
+
+        <p class="footer-text">Don't have an account? <a href="/User/Register" class="link">Sign Up</a></p>
+    </div>
+</body>
+</html>

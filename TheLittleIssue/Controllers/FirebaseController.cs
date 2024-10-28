@@ -25,7 +25,7 @@ namespace TheLittleIssue.Controllers
         /// <param name="email"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<IActionResult> AddUser(string userId, string name, string email, string role)
+        public async Task<IActionResult> AddUser(string userId, string firstName, string dateOfBirth, string secondName, string email, string hashedPassword)
         {
             // Reference to the users collection
             CollectionReference usersCollection = _firestoreDb.Collection("users");
@@ -36,10 +36,11 @@ namespace TheLittleIssue.Controllers
             // Data to store for the user
             Dictionary<string, object> userData = new Dictionary<string, object>
         {
-            { "Name", name },
+            { "FirstName", firstName },
+            { "SecondName", secondName },
+            {"DateOfBirth", dateOfBirth },
             { "Email", email },
-            { "Role", role },
-            { "CreatedAt", Timestamp.FromDateTime(DateTime.UtcNow) }
+            { "HashedPassword", hashedPassword}
         };
 
             // Store the user data in Firestore
@@ -47,6 +48,8 @@ namespace TheLittleIssue.Controllers
 
             return Ok("User added successfully.");
         }
+
+
         /// <summary>
         /// 
         /// </summary>
