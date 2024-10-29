@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Activities</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+
+        html, body {
+            height: auto;
+            overflow: auto;
+        }
+        /* CSS styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            background-image: url('https://th.bing.com/th/id/OIP.Im2J8CHRS2RzIDWZugWw0wHaEv?rs=1&pid=ImgDetMain');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            header h1 {
+                font-size: 2.5rem;
+                color: #222;
+            }
+
+            header p {
+                margin-top: 10px;
+                font-size: 1.2rem;
+            }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .activity-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #555;
+            transition: transform 0.3s;
+        }
+
+            .activity-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .activity-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+
+            .activity-card h2 {
+                margin-top: 10px;
+                font-size: 1.5rem;
+                color: #222;
+            }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+            footer p {
+                font-size: 1rem;
+                color: #777;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Interactive Activities</h1>
+        <p>Wordcross's and puzzles</p>
+    </header>
+
+    <div class="grid-container">
+        <div class="activity-card">
+            <img src="https://images-eu.ssl-images-amazon.com/images/I/91IzAmtr0kL.png" alt="Puzzles Image">
+            <h2>Puzzles</h2>
+        </div>
+        <div class="activity-card">
+            <img src="https://app-cdn.acelitchi.com/prod/app/2022/12/16/lB98WN4znCdkz22.webp" alt="Wordcross Image">
+            <h2>Wordcross's</h2>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 The Little Issue. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript code
+        document.querySelectorAll('.activity-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.backgroundColor = '#e0f7fa';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.backgroundColor = '#fff';
+            });
+        });
+    </script>
+</body>
+</html>

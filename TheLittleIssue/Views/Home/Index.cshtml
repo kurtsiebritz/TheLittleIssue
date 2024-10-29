@@ -18,9 +18,6 @@
             <div class="carousel-item">
                 <img src="../images/home-image2.png" class="d-block w-100 carousel-image" alt="Slide 4">
             </div>
-            <div class="carousel-item">
-                <img src="../images/home-image5.png" class="d-block w-100 carousel-image" alt="Slide 5">
-            </div>
         </div>
 
         <!-- Carousel Controls -->
@@ -36,21 +33,32 @@
 
     <!-- Updated Cards Section -->
     <section class="cards">
-        <div class="card card1">
-            <h2>FATILLES EDUCATIONAL</h2>
-            <p>Explore articles and engaging activities for enhanced learning.</p>
-        </div>
-        <div class="card card2">
-            <h2>INTERACTIVE ACTIVITIES</h2>
-            <p>Discover fun and interactive activities that foster creativity.</p>
-        </div>
-        <div class="card card3">
+        <!-- Make Donations card a button directing to the Donations page -->
+        <a href="/Home/Donations" style="text-decoration: none; color: inherit;">
+            <div class="card card1">
+                <h2>Donations and AID</h2>
+                <p>Explore articles and engaging activities for enhanced learning.</p>
+            </div>
+        </a>
+
+        <!-- Make Interactive Activities card a link -->
+        <a href="/Home/InteractiveActivities" style="text-decoration: none; color: inherit;">
+            <div class="card card2">
+                <h2>INTERACTIVE ACTIVITIES</h2>
+                <p>Discover fun and interactive activities that foster creativity.</p>
+            </div>
+        </a>
+
+        <!-- Social Work Workshops Button -->
+        <button class="card card4" onclick="location.href='/Home/SocialWork'" style="cursor: pointer; border: none;">
+            <h2>Join our Social Work Workshops</h2>
+            <p>Get involved in social work to support community learning.</p>
+        </button>
+
+        <!-- Make Interactive Resources card a button directing to the Resources page -->
+        <div class="card card3" onclick="location.href='/Home/Resources'" style="cursor: pointer;">
             <h2>INTERACTIVE RESOURCES</h2>
             <p>Access a wealth of resources designed for dynamic learning.</p>
-        </div>
-        <div class="card card4">
-            <h2>CREATIVE WORKSHOPS</h2>
-            <p>Join our workshops to explore your creative potential.</p>
         </div>
     </section>
 
@@ -64,15 +72,21 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-
     /* Body Background Image */
     body {
-        background-image: url('../images/background1.jpg'); /* Update with your background image path */
-        background-size: cover; /* Cover the entire viewport */
-        background-position: center; /* Center the background image */
-        background-repeat: no-repeat; /* Prevent repeating */
-        height: 100vh; /* Full viewport height */
-        margin: 0; /* Remove default body margin */
+        background-image: url('../images/background1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    /* Ensure page content can scroll */
+    html, body {
+        height: auto;
+        overflow: auto;
     }
 
     /* Carousel Styles */
@@ -99,26 +113,27 @@
         margin-top: -50px;
         position: relative;
         z-index: 1;
+        flex-wrap: wrap;
     }
 
     .card {
         background-color: #f8f9fa;
-        padding: 30px; /* Increased padding */
-        border-radius: 15px; /* More rounded corners */
+        padding: 30px;
+        border-radius: 15px;
         text-align: center;
-        width: 250px; /* Increased width for bigger cards */
-        height: 250px; /* Fixed height for uniformity */
-        position: relative; /* For shadow effect */
-        overflow: hidden; /* Hide overflow for shadow */
-        transition: transform 0.2s; /* Smooth hover effect */
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        width: 250px;
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
 
         .card:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
+            transform: translateY(-5px);
         }
 
-    /* Clay-like Appearance */
+    /* Card Colors */
     .card1 {
         background: linear-gradient(to bottom, #ffcccb, #f8b4b4);
         box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
@@ -149,9 +164,9 @@
         bottom: 0;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 15px;
-        pointer-events: none; /* Allow clicks through */
+        pointer-events: none;
         box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5);
-        z-index: -1; /* Behind the card */
+        z-index: -1;
     }
 
     .more-info {

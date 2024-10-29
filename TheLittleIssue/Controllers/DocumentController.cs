@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using TheLittleIssue.Models;
 
+[Route("api/[controller]")]
+[ApiController]
 public class DocumentController : Controller
 {
     private readonly FirestoreDb _firestoreDb;
@@ -73,5 +76,58 @@ public class DocumentController : Controller
         }).ToList();
 
         return View(pdfList); // Pass the PDF metadata to the view
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("getPdfUrl/{title}")]
+    public async Task<IActionResult> GetPdfUrlByTitle(string title)
+    {
+        // Reference to the Firestore collection "Issues"
+        CollectionReference issuesCollection = _firestoreDb.Collection("Issues");
+
+        // Query the collection for documents with the specified title
+        Query query = issuesCollection.WhereEqualTo("title", title);
+        QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+
+        if (querySnapshot.Count != 0)
+        {
+            // Assuming only one document has this title
+            DocumentSnapshot document = querySnapshot.Documents[0];
+
+            // Retrieve the URL from the document
+            string pdfUrl = document.GetValue<string>("pdfUrl");
+            return Ok(new { url = pdfUrl });
+        }
+
+        return NotFound($"No PDF document found with title: {title}");
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="title"></param>
+    /// <returns></returns>
+    [HttpGet("getCoverImageUrl/{title}")]
+    public async Task<IActionResult> GetCoverImageUrl(string title)
+    {
+        // Reference to the Firestore collection "Issues"
+        CollectionReference issuesCollection = _firestoreDb.Collection("Issues");
+
+        // Query the collection for documents with the specified title
+        Query query = issuesCollection.WhereEqualTo("title", title);
+        QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+
+        if (querySnapshot.Count != 0)
+        {
+            // Assuming only one document has this title
+            DocumentSnapshot document = querySnapshot.Documents[0];
+
+            // Retrieve the URL from the document
+            string coverUrl = document.GetValue<string>("coverUrl");
+            return Ok(new { url = coverUrl });
+        }
+
+        return NotFound($"No Cover found with title: {title}");
     }
 }

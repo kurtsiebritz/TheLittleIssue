@@ -1,0 +1,210 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/turn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <style>
+        body {
+            overflow-y: auto;
+            background: #ccc;
+        }
+
+        #book {
+            width: 80%;
+            height: 100vh;
+        }
+
+            #book .turn-page {
+                background-color: white;
+            }
+
+            #book .cover {
+                background: #333;
+            }
+
+                #book .cover h1 {
+                    color: white;
+                    text-align: center;
+                    font-size: 50px;
+                    line-height: 500px;
+                    margin: 0px;
+                }
+
+        #controls {
+            width: 800px;
+            text-align: center;
+            margin: 20px 0px;
+            font: 30px arial;
+            justify-content: center;
+        }
+
+            #controls input, #controls label {
+                font: 30px arial;
+            }
+
+        #book .odd, #book .even {
+            background: #FFF;
+        }
+
+        #loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        #content {
+            display: none; /* Hide content until PDF is loaded */
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" style="display: flex">Loading...</div>
+
+    <div id="book" style="display: none;">
+        <div class="cover">
+            <img id="cover-image" src="" alt="Cover Image" style="width: 100%; height: 100%;">
+        </div>
+
+    </div>
+
+    <div id="controls" style="display: none">
+        <label for="page-number">Page:</label> <input type="text" size="3" id="page-number"> of <span id="number-pages"></span>
+    </div>
+
+
+    <script type="text/javascript">
+        let pdfDoc = null;
+        let pageImages = [];
+        const title = "@ViewData["DocumentTitle"]" || "Little-issue-10";
+
+        async function fetchPdfUrl() {
+            try {
+                const response = await fetch(`/api/document/getPdfUrl/${encodeURIComponent(title)}`);
+                if (!response.ok) throw new Error("PDF URL not found");
+                const data = await response.json();
+                return data.url;
+            } catch (error) {
+                console.error("Error fetching PDF URL:", error);
+            }
+        }
+
+        async function fetchCoverImageUrl() {
+            try {
+                const response = await fetch(`/api/document/getCoverImageUrl/${encodeURIComponent(title)}`);
+                if (!response.ok) throw new Error("Cover image URL not found");
+                const data = await response.json();
+                return data.url;
+            } catch (error) {
+                console.error("Error fetching cover image URL:", error);
+            }
+        }
+
+        async function loadPdfPages(pdfUrl) {
+            pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+            const numPages = pdfDoc.numPages;
+
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                const page = await pdfDoc.getPage(pageNum);
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const viewport = page.getViewport({ scale: 1.5 });
+
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                if (pageNum === 1) {
+                    const coverCanvas = document.createElement('canvas');
+                    coverCanvas.width = canvas.width;
+                    coverCanvas.height = canvas.height;
+                    const coverContext = coverCanvas.getContext('2d');
+                    coverContext.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+                    pageImages.push(coverCanvas.toDataURL());
+                } else {
+                    const halfWidth = canvas.width / 2;
+
+                    const leftCanvas = document.createElement('canvas');
+                    leftCanvas.width = halfWidth;
+                    leftCanvas.height = canvas.height;
+                    const leftContext = leftCanvas.getContext('2d');
+                    leftContext.drawImage(canvas, 0, 0, halfWidth, canvas.height, 0, 0, halfWidth, canvas.height);
+                    pageImages.push(leftCanvas.toDataURL());
+
+                    const rightCanvas = document.createElement('canvas');
+                    rightCanvas.width = halfWidth;
+                    rightCanvas.height = canvas.height;
+                    const rightContext = rightCanvas.getContext('2d');
+                    rightContext.drawImage(canvas, halfWidth, 0, halfWidth, canvas.height, 0, 0, halfWidth, canvas.height);
+                    pageImages.push(rightCanvas.toDataURL());
+                }
+            }
+
+            initializeBook();
+        }
+
+        function initializeBook() {
+            $('#book').turn({
+                acceleration: true,
+                pages: pageImages.length,
+                elevation: 50,
+                gradients: !$.isTouch,
+                when: {
+                    turning: function (e, page) {
+                        let range = $(this).turn('range', page);
+                        for (page = range[0]; page <= range[1]; page++) addPage(page, $(this));
+                    },
+                    turned: function (e, page) {
+                        $('#page-number').val(page);
+                    }
+                }
+            });
+            $('#number-pages').html(pageImages.length);
+
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("book").style.display = "flex";
+            document.getElementById("controls").style.display = "flex";
+        }
+
+        function addPage(page, book) {
+            if (!book.turn('hasPage', page) && pageImages[page - 1]) {
+                const element = $('<div />', { 'class': 'page ' + (page % 2 === 0 ? 'odd' : 'even'), 'id': 'page-' + page });
+                const img = $('<img />').attr('src', pageImages[page - 1]).css({ width: '100%', height: '100%' });
+                element.append(img);
+                book.turn('addPage', element, page);
+            }
+        }
+
+        $(window).ready(async function () {
+            const pdfUrl = await fetchPdfUrl();
+            const coverImageUrl = await fetchCoverImageUrl();
+
+            if (pdfUrl && coverImageUrl) {
+                document.getElementById('cover-image').src = coverImageUrl;
+                await loadPdfPages(pdfUrl);
+            }
+
+            $('#page-number').keydown(function (e) {
+                if (e.keyCode === 13) $('#book').turn('page', $('#page-number').val());
+            });
+        });
+
+        $(window).bind('keydown', function (e) {
+            if (e.target && e.target.tagName.toLowerCase() != 'input') {
+                if (e.keyCode === 37) $('#book').turn('previous');
+                else if (e.keyCode === 39) $('#book').turn('next');
+            }
+        });
+    </script>
+</body>
+</html>
