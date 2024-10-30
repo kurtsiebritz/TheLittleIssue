@@ -7,6 +7,65 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/TheLittleIssue.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .history {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        #historyIcon {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: black;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 400px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+            .dropdown-content .log-in-first {
+                padding: 10px;
+                gap: 10px;
+                font-size: 1.2rem;
+            }
+
+            .dropdown-content button {
+                background-color: orange;
+                color: black;
+                border: 1px solid black;
+                margin: 10px;
+                gap: 10px;
+                letter-spacing: 1px;
+            }
+
+        .history-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            justify-content: flex-start;
+            cursor: pointer;
+            color: black;
+        }
+        .history-item:hover {
+            background-color: lightgray;
+        }
+
+    </style>
 </head>
 <body>
     <!-- Header with the new logo and title-->
@@ -40,6 +99,14 @@
                                 <a class="nav-link text-danger" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
                         </ul>
+                        <div class="history">
+                            <span id="historyIcon" aria-label="Reading History">
+                                <i class="ri-history-line" style="font-size: 24px; cursor: pointer;"></i>
+                            </span>
+                            <div id="historyDropdown" class="dropdown-content">
+                                <!-- Loaded dynamically -->
+                            </div>
+                        </div>
                         <div class="d-flex align-items-center">
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -59,22 +126,115 @@
         }
     </header>
 
-    <!-- Container for the main content -->
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-top footer text-muted">
+    <div class="wrapper">
+        <!-- Container for the main content -->
         <div class="container">
-            &copy; 2024 - The Little Issue - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                &copy; 2024 - The Little Issue. - All rights reserved. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        const historyIcon = document.getElementById('historyIcon');
+        const historyDropdown = document.getElementById('historyDropdown');
+        let historyLoaded = false;
+        let historyVisible = false;
+
+        async function loadReadingHistory() {
+            if (!historyVisible) return;
+
+            try {
+                const response = await fetch('/User/GetReadingHistory');
+                const result = await response.json();
+
+                historyDropdown.innerHTML = ''; // Clear previous content
+
+                if (result.isGuest) {
+                    historyDropdown.innerHTML = `
+                            <div class="log-in-first">Please log in to view your reading history.</div>
+                            <button id="loginButton">Login</button>
+                        `;
+                    document.getElementById("loginButton").addEventListener("click", async () => {
+                        try {
+                            const response = await fetch('/User/Logout', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                                }
+                            });
+                            if (response.ok) {
+                                window.location.href = '/User/Login';
+                            } else {
+                                console.error("Logout failed");
+                            }
+                        } catch (error) {
+                            console.error("Error during logout:", error);
+                        }
+                    });
+                } else if (result.success && result.data.length > 0) {
+                    result.data.forEach(entry => {
+                        const historyItem = document.createElement('div');
+                        historyItem.classList.add('history-item');
+
+                        historyItem.innerHTML = `
+                            <strong>Read: ${entry.Title}, </strong>Page: ${entry.Page}
+                        `;
+
+                        historyItem.addEventListener('click', () => {
+                            openArticle(entry.Title, entry.Page);
+                        });
+                        historyDropdown.appendChild(historyItem);
+                    });
+                } else {
+                    historyDropdown.innerHTML = '<div>No reading history available.</div>';
+                }
+            } catch (error) {
+                historyDropdown.innerHTML = '<div>Error loading reading history.</div>';
+                console.error("Error fetching reading history:", error);
+            }
+        }
+
+        function openArticle(title, page) {
+            window.location.href = `/home/ReadArticle?title=${encodeURIComponent(title)}&page=${page}`;
+
+            loadPdfPages(title, page);
+        }
+
+        // Polling function to update history every 5 seconds if the dropdown is open
+        setInterval(() => {
+            if (historyVisible) loadReadingHistory();
+        }, 5000); // 5-second interval
+
+        historyIcon.addEventListener('click', async () => {
+            historyVisible = !historyVisible;
+            historyDropdown.style.display = historyVisible ? 'block' : 'none';
+
+            if (historyVisible && !historyLoaded) {
+                await loadReadingHistory();
+                historyLoaded = true;
+            }
+        });
+
+        // Close the dropdown if clicked outside
+        window.addEventListener('click', function (event) {
+            if (!historyDropdown.contains(event.target) && !historyIcon.contains(event.target)) {
+                historyDropdown.style.display = 'none';
+                historyVisible = false;
+            }
+        });
+    </script>
+
 </body>
 </html>

@@ -3,7 +3,13 @@ body {
     font-family: 'Comic Sans MS', sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: auto; /* Prevent scrolling */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the wrapper takes up at least the full height */
 }
 
 .header-top {
@@ -80,11 +86,12 @@ h1 {
 
 footer {
     margin-top: 50px;
-    padding: 10px;
+    padding: 10px 20px;
     font-size: 14px;
     color: #666;
     background-color: #FFD700;
     text-align: center;
+    width: 99w;
 }
 
 .more-info {

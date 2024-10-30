@@ -3,6 +3,118 @@
 }
 
 <main>
+
+    <style>
+        /* Body Background Image */
+        body {
+            background-image: url('../images/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Ensure page content can scroll */
+        html, body {
+            height: auto;
+            overflow: auto;
+        }
+
+        /* Carousel Styles */
+        #imageCarousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .carousel-inner {
+            height: 400px;
+        }
+
+        .carousel-image {
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Updated Cards Styles */
+        .cards {
+            display: flex;
+            justify-content: space-around;
+            margin-top: -50px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 250px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+        /* Card Colors */
+        .card1 {
+            background: linear-gradient(to bottom, #ffcccb, #f8b4b4);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .card2 {
+            background: linear-gradient(to bottom, #add8e6, #87ceeb);
+            box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
+        }
+
+        .card3 {
+            background: linear-gradient(to bottom, #90ee90, #77dd77);
+            box-shadow: 0 15px 30px rgba(144, 238, 144, 0.3);
+        }
+
+        .card4 {
+            background: linear-gradient(to bottom, #ffeb8c, #ffcc00);
+            box-shadow: 0 15px 30px rgba(255, 255, 0, 0.3);
+        }
+
+        /* Lighting Effect */
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            pointer-events: none;
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5);
+            z-index: -1;
+        }
+
+        .more-info {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .info-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+    </style>
     <!-- Image Carousel Section -->
     <section id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
         <div class="carousel-inner">
@@ -71,114 +183,3 @@
 <!-- Bootstrap JS -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-<style>
-    /* Body Background Image */
-    body {
-        background-image: url('../images/background1.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        margin: 0;
-        overflow-x: hidden;
-    }
-
-    /* Ensure page content can scroll */
-    html, body {
-        height: auto;
-        overflow: auto;
-    }
-
-    /* Carousel Styles */
-    #imageCarousel {
-        max-width: 800px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    .carousel-inner {
-        height: 400px;
-    }
-
-    .carousel-image {
-        height: 100%;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-
-    /* Updated Cards Styles */
-    .cards {
-        display: flex;
-        justify-content: space-around;
-        margin-top: -50px;
-        position: relative;
-        z-index: 1;
-        flex-wrap: wrap;
-    }
-
-    .card {
-        background-color: #f8f9fa;
-        padding: 30px;
-        border-radius: 15px;
-        text-align: center;
-        width: 250px;
-        height: 250px;
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.2s;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-    /* Card Colors */
-    .card1 {
-        background: linear-gradient(to bottom, #ffcccb, #f8b4b4);
-        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
-    }
-
-    .card2 {
-        background: linear-gradient(to bottom, #add8e6, #87ceeb);
-        box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
-    }
-
-    .card3 {
-        background: linear-gradient(to bottom, #90ee90, #77dd77);
-        box-shadow: 0 15px 30px rgba(144, 238, 144, 0.3);
-    }
-
-    .card4 {
-        background: linear-gradient(to bottom, #ffeb8c, #ffcc00);
-        box-shadow: 0 15px 30px rgba(255, 255, 0, 0.3);
-    }
-
-    /* Lighting Effect */
-    .card:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        pointer-events: none;
-        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5);
-        z-index: -1;
-    }
-
-    .more-info {
-        margin-top: 50px;
-        text-align: center;
-    }
-
-    .info-card {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        display: inline-block;
-    }
-</style>

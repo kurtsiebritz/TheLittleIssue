@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Google.Cloud.Firestore.V1;
+using TheLittleIssue.Models;
 
 namespace TheLittleIssue.Controllers
 {
@@ -171,5 +173,161 @@ namespace TheLittleIssue.Controllers
         {
             return password.Length >= 6 && Regex.IsMatch(password, @"\d");
         }
+
+        public async Task<string> GetUserIdByEmailAsync(string email)
+        {
+            try
+            {
+                // Reference to the users collection
+                CollectionReference usersRef = _firestoreDb.Collection("users"); // Ensure 'users' is the correct collection name
+
+                // Create a query to find the user by email
+                Query query = usersRef.WhereEqualTo("Email", email); // Adjust 'email' to your field name in Firestore
+
+                // Execute the query
+                QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+
+                if (querySnapshot.Documents.Count > 0)
+                {
+                    // Get the first matching document
+                    DocumentSnapshot documentSnapshot = querySnapshot.Documents[0];
+                    string userId = documentSnapshot.Id; // The document ID is typically the userId
+
+                    return userId;
+                }
+                else
+                {
+                    Console.WriteLine($"No user found with email: {email}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving user ID: {ex.Message}");
+                return null;
+            }
+        }
+
+        [HttpGet("User/SaveReadingHistory/{articleTitle}/{pageNumber}")]
+        public async Task<IActionResult> SaveReadingHistory(string articleTitle, int pageNumber)
+        {
+            if (string.IsNullOrEmpty(articleTitle) || pageNumber <= 0)
+            {
+                return BadRequest(new { success = false, message = "Invalid reading history data." });
+            }
+
+            if (User.Identity.Name.Equals("Guest"))
+            {
+                // Return early if the user is a guest
+                return Json(new { success = false, isGuest = true, message = "Please log in to save your reading history." });
+            }
+
+            var userEmail = User.Identity.Name;
+            string userId = await GetUserIdByEmailAsync(User.Identity.Name);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
+
+            var userDocRef = _firestoreDb.Collection("users").Document(userId);
+
+            try
+            {
+                // Create the new history entry
+                var readingHistoryEntry = new Dictionary<string, object>
+                {
+                    { "Title", articleTitle },
+                    { "Page", pageNumber },
+                    { "Timestamp", DateTime.UtcNow }
+                };
+
+                // Get existing history
+                var snapshot = await userDocRef.GetSnapshotAsync();
+                List<Dictionary<string, object>> existingHistory = new List<Dictionary<string, object>>();
+
+                if (snapshot.Exists && snapshot.ContainsField("ReadingHistory"))
+                {
+                    existingHistory = snapshot.GetValue<List<Dictionary<string, object>>>("ReadingHistory");
+
+                    // Check if there's an existing entry for this title
+                    var existingEntryIndex = existingHistory.FindIndex(h => h["Title"].ToString() == articleTitle);
+
+                    if (existingEntryIndex >= 0)
+                    {
+                        // Update the existing entry
+                        existingHistory[existingEntryIndex] = readingHistoryEntry;
+                    }
+                    else
+                    {
+                        // Add new entry if title does not exist
+                        existingHistory.Add(readingHistoryEntry);
+                    }
+                }
+                else
+                {
+                    // Initialize the history list with the first entry
+                    existingHistory.Add(readingHistoryEntry);
+                }
+
+                // Save the updated history back to Firestore
+                await userDocRef.UpdateAsync("ReadingHistory", existingHistory);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetReadingHistory()
+        {
+            if (User.Identity.Name.Equals("Guest"))
+            {
+                return Json(new { success = false, isGuest = true, message = "Please log in to view your reading history." });
+            }
+
+            var userEmail = User.Identity.Name;
+            string userId = await GetUserIdByEmailAsync(User.Identity.Name);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
+
+            var userDocRef = _firestoreDb.Collection("users").Document(userId);
+
+            try
+            {
+                var snapshot = await userDocRef.GetSnapshotAsync();
+                if (snapshot.Exists && snapshot.ContainsField("ReadingHistory"))
+                {
+                    var readingHistory = snapshot.GetValue<List<Dictionary<string, object>>>("ReadingHistory");
+
+                    // Sort the entries by Timestamp in ascending order (latest last)
+                    var sortedHistory = readingHistory
+                        .OrderBy(entry => entry.ContainsKey("Timestamp") && entry["Timestamp"] is DateTime timestamp ? timestamp : DateTime.MinValue)
+                        .ToList();
+
+                    // Reverse the order so the latest one is at the top
+                    sortedHistory.Reverse();
+
+                    return Json(new { success = true, data = sortedHistory });
+                }
+
+                return Json(new { success = true, data = new List<object>() }); // Empty history if none exists
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+
+
+
     }
 }

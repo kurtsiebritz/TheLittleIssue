@@ -21,9 +21,10 @@ namespace TheLittleIssue.Controllers
             return View();
         }
 
-        public IActionResult ReadArticle(string title)
+        public IActionResult ReadArticle(string title, int page)
         {
             ViewData["DocumentTitle"] = title;
+            ViewData["StartPage"] = page;
             return View();
         }
 

@@ -37,7 +37,6 @@
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
-            z-index: 1; /* Ensure header is above background */
             border-radius: 15px; /* Rounded corners */
             color: white; /* Set text color to white */
         }
@@ -158,7 +157,7 @@
             // Encode the title to safely include it in the URL
             const encodedTitle = encodeURIComponent(title);
             // Navigate to the new page with the title and PDF URL as query parameters
-            window.location.href = `/home/ReadArticle?title=${encodedTitle}`;
+            window.location.href = `/home/ReadArticle?title=${encodedTitle}&page=1`;
         }
     </script>
 </body>

@@ -12,13 +12,22 @@
 
     <style>
         body {
+            background-image: url('../images/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
             overflow-y: auto;
-            background: #ccc;
+            align-items: center;
+            justify-content: center;
         }
 
         #book {
             width: 80%;
-            height: 100vh;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
         }
 
             #book .turn-page {
@@ -43,10 +52,12 @@
             margin: 20px 0px;
             font: 30px arial;
             justify-content: center;
+            background-color: yellow;
         }
 
-            #controls input, #controls label {
+            #controls input, #controls label, #controls span {
                 font: 30px arial;
+                letter-spacing: 2px;
             }
 
         #book .odd, #book .even {
@@ -74,11 +85,10 @@
         <div class="cover">
             <img id="cover-image" src="" alt="Cover Image" style="width: 100%; height: 100%;">
         </div>
-
     </div>
 
     <div id="controls" style="display: none">
-        <label for="page-number">Page:</label> <input type="text" size="3" id="page-number"> of <span id="number-pages"></span>
+        <label for="page-number">Page: </label> <input type="text" size="3" id="page-number"> of  <span id="number-pages"> </span>
     </div>
 
 
@@ -86,6 +96,7 @@
         let pdfDoc = null;
         let pageImages = [];
         const title = "@ViewData["DocumentTitle"]" || "Little-issue-10";
+        const startPage = "@ViewData["StartPage"]" || 1;
 
         async function fetchPdfUrl() {
             try {
@@ -166,6 +177,7 @@
                     },
                     turned: function (e, page) {
                         $('#page-number').val(page);
+                        saveReadingHistory(title, page);
                     }
                 }
             });
@@ -192,12 +204,44 @@
             if (pdfUrl && coverImageUrl) {
                 document.getElementById('cover-image').src = coverImageUrl;
                 await loadPdfPages(pdfUrl);
+
+                $('#book').turn('page', startPage);
             }
 
             $('#page-number').keydown(function (e) {
-                if (e.keyCode === 13) $('#book').turn('page', $('#page-number').val());
+                if (e.keyCode === 13) {
+                    const pageNum = $('#page-number').val();
+                    $('#book').turn('page', pageNum);
+                    saveReadingHistory(title, pageNum); // Call to save reading history
+                }
             });
         });
+
+        async function saveReadingHistory(articleTitle, pageNumber) {
+            try {
+                // Construct the URL with URL-encoded parameters
+                const url = `/User/SaveReadingHistory/${encodeURIComponent(articleTitle)}/${pageNumber}`;
+
+                // Make a GET request to the server
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+
+                if (result.isGuest) {
+                    //do nothing
+                } else if (result.success) {
+                    console.log("Reading history saved successfully");
+                } else {
+                    console.error("Error saving reading history:", result.message);
+                }
+            } catch (error) {
+                console.error("Error saving reading history:", error);
+            }
+        }
+
 
         $(window).bind('keydown', function (e) {
             if (e.target && e.target.tagName.toLowerCase() != 'input') {
@@ -206,5 +250,7 @@
             }
         });
     </script>
+
+
 </body>
 </html>
