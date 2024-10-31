@@ -16,10 +16,37 @@ namespace TheLittleIssue.Controllers
             _firestoreDb = firestoreDb;
         }
 
-        public IActionResult Index()
+
+
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var articles = new List<IssueModel>();
+            var snapshot = await _firestoreDb.Collection("Issues").GetSnapshotAsync();
+
+            Console.WriteLine("Snapshot empty? " + (snapshot.Documents.Count == 0));
+
+            foreach (var document in snapshot.Documents)
+            {
+                if (document.Exists)
+                {
+                    articles.Add(new IssueModel
+                    {
+                        Id = document.Id,
+                        Title = document.GetValue<string>("title"),
+                        CoverUrl = document.GetValue<string>("coverUrl"),
+                        PdfUrl = document.GetValue<string>("pdfUrl")
+                    });
+                }
+            }
+
+            // Debugging output
+            Console.WriteLine("Articles retrieved: " + articles.Count);
+            return View(articles); // Pass the articles to the Index view
+
+
         }
+
 
         public IActionResult ReadArticle(string title, int page)
         {

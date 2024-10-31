@@ -11,40 +11,54 @@
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-image: url(/images/background1.jpg);
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(to bottom, #A0D8E0 30%, #FFEB3B 60%);
             color: #333;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            flex-direction: column; /* Stack header and container vertically */
+            justify-content: center; /* Center the container vertically */
+            align-items: center; /* Center items horizontally */
+            height: 100vh; /* Full viewport height */
+            position: relative; /* For the pseudo-element */
         }
 
-        .container {
-            background-color: rgba(255, 204, 0, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
+        header {
+            text-align: center; /* Center header text */
+            margin-top: 65px; /* Space between header and container */
+            width: 100%; /* Full width for header */
         }
 
         .title {
-            font-size: 2.5em;
+            font-size: 2em; /* Adjusted font size for better responsiveness */
             color: red;
+            margin: 0; /* Remove default margin for better fit */
         }
 
+        .container {
+            background-color: rgba(255, 255, 255, 0); /* Fully transparent background */
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: none; /* No shadow */
+            padding: 20px; /* Padding around content */
+            text-align: center; /* Center text */
+            max-width: 400px; /* Maximum width of the container */
+            width: 90%; /* Responsive width */
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Light white border */
+            z-index: 1; /* Bring container above the pseudo-element */
+            box-sizing: border-box; /* Include padding in width calculations */
+            margin-top: 30px; /* Space above container */
+        }
+
+
+
+
         .subtitle {
-            font-size: 1.2em;
+            font-size: 1em; /* Adjusted font size for better responsiveness */
             color: #333;
         }
 
         .input-group {
-            margin: 15px 0;
+            margin: 10px 0; /* Reduced margin for smaller screens */
             text-align: left;
         }
 
@@ -57,29 +71,41 @@
         input {
             width: 100%;
             padding: 10px;
-            border-radius: 5px;
-            border: 2px solid red;
+            border-radius: 5px; /* More rounded look */
+            border: 2px solid #add8e6; /* Light blue border */
             font-size: 1em;
         }
+
 
             input:focus {
                 outline: none;
                 border-color: #33ccff;
             }
 
-        .login-button {
+        .login-button, .guest-button {
+            width: 100%; 
             background-color: #33ccff;
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 10px 15px;
+            padding: 10px 0;
             font-size: 1.2em;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 10px; 
         }
 
             .login-button:hover {
                 background-color: #0080ff;
+            }
+
+        .guest-button {
+            background-color: #ffcc00; 
+            color: black;
+        }
+
+            .guest-button:hover {
+                background-color: #e6b800; 
             }
 
         .footer-text {
@@ -96,23 +122,22 @@
             margin-bottom: 15px;
         }
 
-        .guest-button {
-            background-color: #ffcc00; /* Yellow color for guest button */
-            color: black;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+            background-size: 100px 100px;
+            opacity: 0.5;
+            z-index: 0; /* Behind the container */
         }
-
-            .guest-button:hover {
-                background-color: #e6b800; /* Darker yellow on hover */
-            }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1 class="title">Welcome Back!</h1>
         <p class="subtitle">Please log in to continue</p>

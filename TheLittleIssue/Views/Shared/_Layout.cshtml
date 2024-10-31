@@ -70,7 +70,7 @@
 <body>
     <!-- Header with the new logo and title-->
     <header>
-        <div class="header-top d-flex justify-content-center align-items-center bg-warning">
+        <div class="header-top d-flex justify-content-center align-items-center" style="background-color: #A0D8E0;">
             <img src="~/images/logo.png" alt="Logo" class="navbar-logo" style="height: 60px; margin-right: 15px;" />
             <h1 class="text-danger" style="font-size: 36px; text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); margin: 0;">The Little Issue</h1>
         </div>
@@ -78,7 +78,7 @@
         <!-- Conditionally render the Navbar based on HideNavBar -->
         @if (ViewData["HideNavBar"] == null || !(bool)ViewData["HideNavBar"])
         {
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-warning box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light" style="background-color: #A0D8E0; box-shadow: none;">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -140,15 +140,9 @@
             </main>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                &copy; 2024 - The Little Issue. - All rights reserved. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
+     
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

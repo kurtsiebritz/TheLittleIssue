@@ -13,40 +13,59 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Sans+MS|Nunito:400,600,700">
 
     <style>
-        /* Base styling for the registration page */
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Full height of the viewport */
+            background: linear-gradient(to bottom, #A0D8E0 30%, #FFEB3B 60%);
+            color: #333;
             margin: 0;
-            padding: 0; /* Ensure no padding is affecting height */
-            background-image: url(/images/background1.jpg);
-            background-size: cover; /* Cover the entire screen */
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Stack header and container vertically */
+            justify-content: center; /* Center the container vertically */
+            align-items: center; /* Center items horizontally */
+            height: 100vh; /* Full viewport height */
+            position: relative; /* For the pseudo-element */
+            overflow: hidden; /* Prevent overflow */
         }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+                background-size: 100px 100px;
+                opacity: 0.5;
+                z-index: 0; /* Behind the container */
+            }
 
         /* Main container for the registration box */
         .register-container {
-            background-color: rgba(255, 204, 0, 0.8); /* Bright yellow with some transparency */
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            margin: auto; /* Centering */
+            background-color: rgba(255, 255, 255, 0); /* Slightly opaque background */
+            border-radius: 30px; /* Rounded corners */
+            box-shadow:none; /* Add a shadow for visibility */
+            padding: 20px; /* Padding around content */
+            text-align: center; /* Center text */
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            max-width: 400px; /* Maximum width of the container */
+            width: 90%; /* Responsive width */
+            z-index: 1; /* Bring container above the pseudo-element */
+            box-sizing: border-box; /* Include padding in width calculations */
+            margin-top: 30px; /* Space above container */
+            position: relative; /* Allow z-index to take effect */
         }
 
         .register-title {
             font-size: 2.5em;
-            color: #ff0066; /* Playful pink */
+            color: #333; /* Change to match the login title color */
             margin-bottom: 1rem;
         }
 
         .register-description {
             font-size: 1.2em;
-            color: #333;
+            color: #666; /* Grey for the description text */
             margin-bottom: 1rem;
         }
 
@@ -56,18 +75,18 @@
             padding: 10px;
             margin: 15px 0;
             border-radius: 5px;
-            border: 2px solid #ff0066; /* Pink border */
+            border: 2px solid #add8e6; /* Grey border */
             font-size: 1em;
         }
 
             .register-input:focus {
                 outline: none;
-                border-color: #33ccff; /* Light blue focus */
+                border-color: #66afe9; /* Light blue focus */
             }
 
         /* Button styling */
         .register-button {
-            background-color: #33ccff; /* Light blue button */
+            background-color: #33ccff; /* Green button */
             color: white;
             border: none;
             border-radius: 5px;
@@ -80,7 +99,7 @@
         }
 
             .register-button:hover {
-                background-color: #0080ff; /* Darker blue on hover */
+                background-color: #0080ff; /* Darker green on hover */
             }
 
         .register-footer {
@@ -89,7 +108,7 @@
         }
 
             .register-footer a {
-                color: #ff0066; /* Pink for link */
+                color: red; /* Blue for link */
                 text-decoration: none;
             }
 
@@ -104,12 +123,18 @@
             margin-top: -10px;
             margin-bottom: 10px;
         }
+
+        header {
+            text-align: center; /* Center header text */
+            margin-top: 65px; /* Space between header and container */
+            width: 100%; /* Full width for header */
+        }
     </style>
 </head>
 
 <body>
     <div class="register-container">
-        <h1 class="register-title">Create an Account</h1>
+        <h1 class="register-title">Sign Up</h1>
         <p class="register-description">Please fill in the details to register.</p>
 
         <form action="/User/Register" method="post" onsubmit="return validateForm()">
@@ -124,7 +149,7 @@
             <span id="confirmPasswordError" class="error-message"></span>
 
             <input type="hidden" name="role" value="User">
-            
+
             <button type="submit" class="register-button">Register</button>
         </form>
 

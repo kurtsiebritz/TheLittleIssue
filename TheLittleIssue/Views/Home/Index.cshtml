@@ -1,146 +1,192 @@
-﻿@{
+﻿@model IEnumerable<TheLittleIssue.Models.IssueModel>
+
+@{
     ViewBag.Title = "The Little Issue";
 }
 
 <main>
 
     <style>
-        /* Body Background Image */
         body {
-            background-image: url('../images/background1.jpg');
+            background: linear-gradient(to bottom, #A0D8E0 30%, #FFEB3B 60%); /* Blue starts at 30%, yellow at 60% */
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            min-height: 100vh;
             margin: 0;
-            overflow-x: hidden;
+            overflow: auto; /* Allow scrolling */
         }
 
-        /* Ensure page content can scroll */
-        html, body {
-            height: auto;
-            overflow: auto;
-        }
+            /* Custom Scrollbar Styles */
+            body::-webkit-scrollbar {
+                width: 8px; /* Width of the scrollbar */
+            }
 
-        /* Carousel Styles */
-        #imageCarousel {
-            max-width: 800px;
-            margin: 0 auto;
+            body::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.2); /* Background of the scrollbar track */
+                border-radius: 10px; /* Rounded corners for the track */
+            }
+
+            body::-webkit-scrollbar-thumb {
+                background: #A0D8E0; /* Color of the scrollbar thumb */
+                border-radius: 10px; /* Rounded corners for the thumb */
+            }
+
+                body::-webkit-scrollbar-thumb:hover {
+                    background: #009B9F; /* Darker color on hover */
+                }
+
+            /* Firefox scrollbar styles */
+            body::-moz-scrollbar {
+                width: 8px; /* Width of the scrollbar for Firefox */
+            }
+
+            body::-moz-scrollbar-track {
+                background: rgba(255, 255, 255, 0.2); /* Background of the scrollbar track for Firefox */
+                border-radius: 10px; /* Rounded corners for the track */
+            }
+
+            body::-moz-scrollbar-thumb {
+                background: #A0D8E0; /* Color of the scrollbar thumb for Firefox */
+                border-radius: 10px; /* Rounded corners for the thumb */
+            }
+
+                body::-moz-scrollbar-thumb:hover {
+                    background: #009B9F; /* Darker color on hover for Firefox */
+                }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+                background-size: 100px 100px;
+                opacity: 0.5;
+                z-index: 0;
+            }
+
+
+
+        .container {
             position: relative;
+            z-index: 1;
+            padding: 20px; /* Add padding to prevent content from touching edges */
         }
 
-        .carousel-inner {
-            height: 400px;
+        /* Single Image Styles */
+        #singleImage {
+            margin: 20px 0; /* Space around the image */
         }
 
-        .carousel-image {
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px;
+        .img-fluid {
+            max-width: 100%; /* Ensure the image is responsive */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 5px; /* Rounded corners */
         }
 
-        /* Updated Cards Styles */
         .cards {
             display: flex;
             justify-content: space-around;
-            margin-top: -50px;
+            margin-top: 30px; /* Increased margin to position lower */
             position: relative;
             z-index: 1;
-            flex-wrap: wrap;
         }
 
         .card {
-            background-color: #f8f9fa;
-            padding: 30px;
+            background-color: rgba(255, 255, 255, 0); /* Fully transparent */
+            padding: 20px; /* Reduced padding */
             border-radius: 15px;
             text-align: center;
-            width: 250px;
-            height: 250px;
+            width: 200px; /* Smaller width */
+            height: 200px; /* Smaller height */
             position: relative;
             overflow: hidden;
             transition: transform 0.2s;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            color: rgba(0, 0, 0, 1); /* Dark text for visibility */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* Light border */
+            box-shadow: none; /* No shadow */
         }
 
-            .card:hover {
-                transform: translateY(-5px);
-            }
 
-        /* Card Colors */
-        .card1 {
-            background: linear-gradient(to bottom, #ffcccb, #f8b4b4);
-            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+        .card:hover {
+            transform: translateY(-5px);
         }
 
-        .card2 {
-            background: linear-gradient(to bottom, #add8e6, #87ceeb);
-            box-shadow: 0 15px 30px rgba(173, 216, 230, 0.3);
-        }
-
-        .card3 {
-            background: linear-gradient(to bottom, #90ee90, #77dd77);
-            box-shadow: 0 15px 30px rgba(144, 238, 144, 0.3);
-        }
-
-        .card4 {
-            background: linear-gradient(to bottom, #ffeb8c, #ffcc00);
-            box-shadow: 0 15px 30px rgba(255, 255, 0, 0.3);
-        }
-
-        /* Lighting Effect */
-        .card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            pointer-events: none;
-            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5);
-            z-index: -1;
+        .card h2, .card p {
+            text-shadow: none; /* No text shadow */
         }
 
         .more-info {
-            margin-top: 50px;
+            margin-top: 30px; /* Adjust margin for spacing */
             text-align: center;
         }
 
         .info-card {
-            background-color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: inline-block;
+            width: 100%; /* Full width for better layout */
+        }
+
+        .articles-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: space-between; /* Space items evenly */
+            background-color: rgba(255, 255, 255, 0); /* Fully transparent background */
+        }
+
+        .article-card {
+            flex: 0 1 calc(25% - 20px); /* 25% width minus margin for spacing */
+            margin: 10px; /* Add margin for spacing */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .article-card img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .article-card h2 {
+            color: black;
+            font-size: 1.2em;
+            background: rgba(135, 206, 235, 0.9);
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* Responsive Sizing */
+        @@media (max-width: 768px) {
+            .card {
+                width: 180px;
+                height: 160px;
+                margin: 10px;
+            }
+            .article-card {
+                flex: 0 1 calc(50% - 20px); /* 50% width on smaller screens */
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .article-card {
+                flex: 0 1 calc(100% - 20px); /* 100% width on very small screens */
+            }
         }
     </style>
-    <!-- Image Carousel Section -->
-    <section id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="../images/home-image.png" class="d-block w-100 carousel-image" alt="Slide 1">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/home-image4.jpg" class="d-block w-100 carousel-image" alt="Slide 2">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/home-image3.jpg" class="d-block w-100 carousel-image" alt="Slide 3">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/home-image2.png" class="d-block w-100 carousel-image" alt="Slide 4">
-            </div>
-        </div>
 
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    <!-- Single Image Section -->
+    <section id="singleImage" style="text-align: center; margin: 20px 0;">
+        <img src="../images/home-image.png" alt="Main Image" class="img-fluid" style="max-width: 100%; height: auto; border-radius: 5px;">
     </section>
 
     <!-- Updated Cards Section -->
@@ -149,7 +195,7 @@
         <a href="/Home/Donations" style="text-decoration: none; color: inherit;">
             <div class="card card1">
                 <h2>Donations and AID</h2>
-                <p>Explore articles and engaging activities for enhanced learning.</p>
+                <img src="~/images/donations.png" alt="Donations and AID" style="width: 100%; height: auto;" />
             </div>
         </a>
 
@@ -157,29 +203,52 @@
         <a href="/Home/InteractiveActivities" style="text-decoration: none; color: inherit;">
             <div class="card card2">
                 <h2>INTERACTIVE ACTIVITIES</h2>
-                <p>Discover fun and interactive activities that foster creativity.</p>
+                <img src="~/images/game.png" alt="Interactive Activities" style="width: 100%; height: auto;" />
             </div>
         </a>
 
         <!-- Social Work Workshops Button -->
-        <button class="card card4" onclick="location.href='/Home/SocialWork'" style="cursor: pointer; border: none;">
+        <button class="card card4" onclick="location.href='/Home/SocialWork'" style="cursor: pointer;">
             <h2>Join our Social Work Workshops</h2>
-            <p>Get involved in social work to support community learning.</p>
+            <img src="~/images/workshop.png" alt="Social Work Workshop" style="width: 100%; height: auto;" />
         </button>
 
         <!-- Make Interactive Resources card a button directing to the Resources page -->
         <div class="card card3" onclick="location.href='/Home/Resources'" style="cursor: pointer;">
             <h2>INTERACTIVE RESOURCES</h2>
-            <p>Access a wealth of resources designed for dynamic learning.</p>
+            <img src="~/images/interactive.png" alt="Interactive Resources" style="width: 100%; height: auto;" />
         </div>
     </section>
 
+    <!-- Articles Section -->
     <section class="more-info">
         <h2>Articles</h2>
-        <div class="info-card">Resources</div>
+        <div class="info-card">
+            @if (Model != null && Model.Any())
+            {
+                <div class="articles-container">
+                    @foreach (var article in Model)
+                    {
+                        <div class="article-card" onclick="openArticlePage('@article.Title')">
+                            <img src="@article.CoverUrl" alt="@article.Title" />
+                            <h2>@article.Title</h2>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No articles available at the moment.</p>
+            }
+        </div>
     </section>
 </main>
 
 <!-- Bootstrap JS -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+    function openArticlePage(title) {
+        const encodedTitle = encodeURIComponent(title);
+        window.location.href = `/home/ReadArticle?title=${encodedTitle}&page=1`;
+    }
+</script>

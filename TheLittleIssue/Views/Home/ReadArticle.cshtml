@@ -12,15 +12,63 @@
 
     <style>
         body {
-            background-image: url('../images/background1.jpg');
+            background: linear-gradient(to bottom,#A0D8E0 30%, #1E90FF 60%);
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            min-height: 100vh;
-            overflow-y: auto;
-            align-items: center;
-            justify-content: center;
+            margin: 0;
+            overflow: auto; /* Allow scrolling */
         }
+
+            /* Custom Scrollbar Styles */
+            body::-webkit-scrollbar {
+                width: 8px; /* Width of the scrollbar */
+            }
+
+            body::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.2); /* Background of the scrollbar track */
+                border-radius: 10px; /* Rounded corners for the track */
+            }
+
+            body::-webkit-scrollbar-thumb {
+                background: #A0D8E0; /* Color of the scrollbar thumb */
+                border-radius: 10px; /* Rounded corners for the thumb */
+            }
+
+                body::-webkit-scrollbar-thumb:hover {
+                    background: #009B9F; /* Darker color on hover */
+                }
+
+            /* Firefox scrollbar styles */
+            body::-moz-scrollbar {
+                width: 8px; /* Width of the scrollbar for Firefox */
+            }
+
+            body::-moz-scrollbar-track {
+                background: rgba(255, 255, 255, 0.2); /* Background of the scrollbar track for Firefox */
+                border-radius: 10px; /* Rounded corners for the track */
+            }
+
+            body::-moz-scrollbar-thumb {
+                background: #A0D8E0; /* Color of the scrollbar thumb for Firefox */
+                border-radius: 10px; /* Rounded corners for the thumb */
+            }
+
+                body::-moz-scrollbar-thumb:hover {
+                    background: #009B9F; /* Darker color on hover for Firefox */
+                }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+                background-size: 100px 100px;
+                opacity: 0.5;
+                z-index: 0;
+            }
 
         #book {
             width: 80%;
