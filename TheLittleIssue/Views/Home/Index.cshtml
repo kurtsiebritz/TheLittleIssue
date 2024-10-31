@@ -135,6 +135,7 @@
             flex-wrap: wrap; /* Allow items to wrap to the next line */
             justify-content: space-between; /* Space items evenly */
             background-color: rgba(255, 255, 255, 0); /* Fully transparent background */
+            cursor: pointer;
         }
 
         .article-card {
@@ -163,6 +164,12 @@
             border-radius: 8px;
             display: inline-block;
             margin-top: 5px;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
 
         /* Responsive Sizing */
