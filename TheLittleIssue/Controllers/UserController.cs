@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Google.Cloud.Firestore.V1;
 using TheLittleIssue.Models;
+using System.Data;
 
 namespace TheLittleIssue.Controllers
 {
@@ -49,6 +50,7 @@ namespace TheLittleIssue.Controllers
             DocumentSnapshot userDoc = userSnapshot.Documents[0];
             string storedHashedPassword = userDoc.GetValue<string>("HashedPassword");
             string hashedInputPassword = HashPassword(password);
+            string userRole = userDoc.GetValue<string>("Role");
 
             if (storedHashedPassword != hashedInputPassword)
             {
@@ -60,7 +62,8 @@ namespace TheLittleIssue.Controllers
             {
                 new Claim(ClaimTypes.Name, email),
                 new Claim("FirstName", userDoc.GetValue<string>("FirstName")),
-                new Claim("SecondName", userDoc.GetValue<string>("SecondName"))
+                new Claim("SecondName", userDoc.GetValue<string>("SecondName")),
+                new Claim(ClaimTypes.Role, userRole) // Add role to claims
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -69,9 +72,9 @@ namespace TheLittleIssue.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Register action with validation
+        // Register action with role input and validation
         [HttpPost]
-        public async Task<IActionResult> Register(string firstName, string secondName, string dateOfBirth, string email, string password, string confirmPassword)
+        public async Task<IActionResult> Register(string firstName, string secondName, string dateOfBirth, string email, string password, string confirmPassword, string role)
         {
             // Check if the email already exists
             CollectionReference usersCollection = _firestoreDb.Collection("users");
@@ -96,6 +99,13 @@ namespace TheLittleIssue.Controllers
                 ViewData["ConfirmPasswordError"] = "Passwords do not match."; // Set error message for Razor view
             }
 
+            // Validate role
+            if (string.IsNullOrEmpty(role) || !(role == "Admin" || role == "Employee" || role == "User"))
+            {
+                ModelState.AddModelError("role", "Invalid role selected.");
+                ViewData["RoleError"] = "Invalid role selected."; // Set error message for Razor view
+            }
+
             // If any validation errors, return to the register view with error messages
             if (!ModelState.IsValid)
             {
@@ -111,7 +121,8 @@ namespace TheLittleIssue.Controllers
                 { "SecondName", secondName },
                 { "DateOfBirth", dateOfBirth },
                 { "Email", email },
-                { "HashedPassword", hashedPassword }
+                { "HashedPassword", hashedPassword },
+                { "Role", role }
             };
 
             await userDoc.SetAsync(userData);
@@ -120,7 +131,8 @@ namespace TheLittleIssue.Controllers
             {
                 new Claim(ClaimTypes.Name, email),
                 new Claim("FirstName", firstName),
-                new Claim("SecondName", secondName)
+                new Claim("SecondName", secondName),
+                new Claim(ClaimTypes.Role, role) // Add role to claims
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

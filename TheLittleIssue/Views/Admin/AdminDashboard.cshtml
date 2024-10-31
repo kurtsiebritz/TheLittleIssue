@@ -1,0 +1,117 @@
+﻿@model AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<style>
+    /* Add styles for a scrollbar */
+    .tab-content {
+        max-height: 400px; 
+        overflow-y: auto;
+        padding: 20px;
+        border: 1px solid #dee2e6; 
+        border-radius: 0.25rem;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center">Admin Dashboard</h2>
+
+    <!-- Bootstrap Tabs -->
+    <ul class="nav nav-tabs" id="adminTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link @(TempData["ShowRegisterTab"] == null ? "active" : "")" id="upload-tab" data-bs-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="@(TempData["ShowRegisterTab"] == null ? "true" : "false")">Upload PDF Document</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link @(TempData["ShowRegisterTab"] != null ? "active" : "")" id="register-tab" data-bs-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="@(TempData["ShowRegisterTab"] != null ? "true" : "false")">Register User</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content p-4 border border-top-0 rounded-bottom" id="adminTabContent">
+        <!-- Upload PDF Tab -->
+        <div class="tab-pane fade @(TempData["ShowRegisterTab"] == null ? "show active" : "")" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+            <section>
+                <h3>Upload PDF Document</h3>
+                @if (TempData["UploadError"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["UploadError"]</div>
+                }
+                <form asp-action="UploadPdf" asp-controller="Document" enctype="multipart/form-data" method="post">
+                    <div class="mb-3">
+                        <label for="pdfFile">Select PDF:</label>
+                        <input type="file" name="pdfFile" accept="application/pdf" required class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload PDF</button>
+                </form>
+                <!-- List of Uploaded PDFs -->
+                <h3 class="mt-4">Uploaded PDFs</h3>
+                <ul>
+                    @foreach (var pdf in Model.PdfDocuments)
+                    {
+                        <li>
+                            <a href="@pdf.DownloadUrl" target="_blank">@pdf.FileName</a>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+
+        <!-- Register User Tab -->
+        <div class="tab-pane fade @(TempData["ShowRegisterTab"] != null ? "show active" : "")" id="register" role="tabpanel" aria-labelledby="register-tab">
+            <section>
+                <h3>Register User</h3>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var entry in ViewData.ModelState)
+                            {
+                                foreach (var error in entry.Value.Errors)
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+                <form asp-action="Register" asp-controller="Admin" method="post">
+                    <div class="mb-3">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" name="firstName" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="secondName">Second Name:</label>
+                        <input type="text" name="secondName" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="date" name="dateOfBirth" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" name="confirmPassword" required class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="role">Role:</label>
+                        <select name="role" required class="form-select">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqEQrF9rQo5Nhv4Wzj1zYb5Jx8X/QLZZjx3PQCENz7Mr5FZB4OLyO/8uWV2Qg" crossorigin="anonymous"></script>

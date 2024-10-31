@@ -98,6 +98,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-danger" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) // Check if the user is authenticated and an Admin
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" asp-area="" asp-controller="Admin" asp-action="AdminDashboard">Admin Dashboard</a>
+                                </li>
+                            }
                         </ul>
                         <div class="history">
                             <span id="historyIcon" aria-label="Reading History">
@@ -142,6 +148,7 @@
         </footer>
     </div>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
