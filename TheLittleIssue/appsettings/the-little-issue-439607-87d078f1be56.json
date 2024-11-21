@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "the-little-issue-439607",
+  "private_key_id": "fbbe15681e44e3facb9de8cea0bd8dda1d47149e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCrcw+evl+As9tr\n+WyMO8//IsvkJeinSL4kyXADZ8p2sYp9DCr7+PlrjxrnVoMEw8maJmbVfbKrl+V4\nTm639nLGCzjGYoa5d6mNDV7oFaFoU8VjuaTGQOoHakhLpPz/fODR9j6F4VQFKRpi\nRhQYK+uxMOH5M02RhiwpYMChde6LFMeRyH5yWtLSUi2aTfyJ2Q/PcUdN7ITc3YXZ\nz8DITqjW3EUqFstmxMNiNxn8os8tNbQGv4XnfpmSPEbMSsJT1+ASmDfC7rlOonGz\nCdA1OaEBtBCHcD5oBD+0wgA8btkN51b8kOJ+YppACaNbCX33qSVMOO14ifnx96uA\nTK3AgA3rAgMBAAECggEADm8l8gHqDW5W+0yo+Fdyx/KYgtE0OJ01sOgqn4bF8184\nHxX+qm8IJKeMJszQQ/7twqYYA0JNYAfuQEYuKRu9BvJb6cvSttudsSvegSCNEbj3\nxdETz8MYUN6ATqoJyMKtNNAL7H6Pcc3HlF19BJnyAl1wsOfCUI2guy0TmqRQnHHU\njbNcIlN2gHhym+3HA1TcNGb3h9VfDXIKzVANW/iBoD3d+WRr8MPOoQ97u+EXdcBG\nUZ1ht8p+d0lLQGhYdM7YYeDhAWzPQtA9jrQP3iNt9aCPiTdeQtsKKnvPejucQ0EH\nCOtEd8QlW1nzlnDHV7X4HJzxd8niZnjP2fGHbbpl+QKBgQDgTkXywtH12VRE5ini\nGuG19K7i9xkYez3n9l0kG6kZZUrVbpG08hTiX8xABQhiv/KiSJe8ENccimKKONQm\nD6fvnY3BGDvIbo5KHCcZDeNzG3CbylwzsTqrWFM1/Kv8wfVjY/OA+AXW06t9KYk0\n/YTFjhGu3Zjd0cLhohgyCAaecwKBgQDDrNZHN5GMLITadxwmEwL40xKSDN9OdpdG\n4Ea2MTA3OteaaA4Vxj4vnQ5d7dJFUhu+cM0Kw6T+g5Tbd7aBrFwOBoJWc92Ghpm3\nfq8Ac/LoF1/p22dZpkduwSneLMfHZpZTXR5lNkBQ2BDmTv499Udvj4Vb2SsNTvEx\n8xzfaue8qQKBgFs3+cJL8E7m3xpV79p/zCLPKwAqNQ57sCVRT3eLuC0XwGMj4CWR\n/WRCSTIP2eUu4mGU3AAjaRe2P3Suv7fqzgToMenBDS7ppvwEjvHlcAYztovks7Jh\n9NYRyWU/KEJWLpEI6NIeC2HeGvN/nMjsAL7Gk/JlM/GhiHtyDBzsnqR5AoGAGHGv\n9weXFBa/pfb5Ojxnw6PCjyIyhz/DWCROURZF+rBMHMrg75FrVVFeaRd7jBNcyeaX\nhr+4Dd9sKhqDXyGkAlCH2brxsouACm81922Eq7+3yKQS/h0KkWhqDYo0jtFe+B0K\n3gPv9ul2+v5lPmI0wVgBhd7URP5WnTHMqpBVULkCgYEAq7yupr8O3nQG/TjUep+b\n+ikMdIec3c/3CWn+zpgtzVOQaomv+RDGVRvWwvzgOLo7ii9kOVZMUhs6SMXiLfdo\n8SQTw3GDKGr1uedn1v83ZM8LDMUw18Z3KMyUX+Xo3TL67ToUGarNC+jN+GY/twgg\nYtvDRSh+oSRMdxBqILuCCos=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firestore-storage-service-acco@the-little-issue-439607.iam.gserviceaccount.com",
+  "client_id": "114790215390895952376",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firestore-storage-service-acco%40the-little-issue-439607.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
