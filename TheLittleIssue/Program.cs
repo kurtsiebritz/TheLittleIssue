@@ -1,13 +1,29 @@
 using Google.Cloud.Firestore;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Google.Cloud.SecretManager.V1;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Set the path to your service account key file using a relative path
-string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-string keyFilePath = Path.Combine(baseDirectory, "appsettings", "the-little-issue-439607-87d078f1be56.json");
+string projectId = "the-little-issue-439607";
+string secretId = "the-little-issue-439607-87d078f1be56";
+string versionId = "latest";
+
+// Access the secret
+SecretManagerServiceClient client = SecretManagerServiceClient.Create();
+AccessSecretVersionResponse response = client.AccessSecretVersion(
+    new SecretVersionName(projectId, secretId, versionId));
+
+string keyFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings", "service-account-key.json");
+Directory.CreateDirectory(Path.GetDirectoryName(keyFilePath)); // Ensure the directory exists
+File.WriteAllBytes(keyFilePath, response.Payload.Data.ToByteArray());
+
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", keyFilePath);
+
+// Set the path to your service account key file using a relative path
+//string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+//string keyFilePath = Path.Combine(baseDirectory, "appsettings", "the-little-issue-439607-87d078f1be56.json");
+//Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", keyFilePath);
 
 // Add Firestore
 builder.Services.AddSingleton(FirestoreDb.Create("the-little-issue-439607"));
