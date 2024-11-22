@@ -55,8 +55,9 @@ Copy code
 git clone https://github.com/kurtsiebritz/TheLittleIssue.git
 cd TheLittleIssue
 2.	Set Up Environment Variables:
-o	Configure Firebase authentication keys.
-o	Configure Google Cloud credentials for database and storage access.
+o	Load/copy the Credentials .json file to the appsettings folder in the project directory.
+o	Either request access from developers.
+o	If running with access to all project files, the .json file is available in the applications folder, along with a zip version of github.
 3.	Build and Run:
 o	Open in Visual Studio.
 o	Build the solution and run the app locally.
